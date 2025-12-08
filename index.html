@@ -1,15 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PQ97LGC85R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-PQ97LGC85R');
-</script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited</title>
@@ -20,23 +11,18 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://marketinghuts-del.github.io/bomardekdiagnosticandpharmaceutical/" />
 
-  <!-- Open Graph (WhatsApp, Facebook, LinkedIn preview) -->
+  <!-- Open Graph -->
   <meta property="og:site_name" content="Zone 3 Diagnostic & Laboratory Services Limited" />
   <meta property="og:title" content="Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited" />
   <meta property="og:description" content="Tap or scan the QR code to open our secure form. Book, refer, or submit samples easily — fast and reliable diagnostics for patients, doctors, and hospitals." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://marketinghuts-del.github.io/bomardekdiagnosticandpharmaceutical/" />
-
-  <!-- REQUIRED: GitHub Pages absolute OG image URL -->
   <meta property="og:image" content="https://marketinghuts-del.github.io/bomardekdiagnosticandpharmaceutical/preview.jpg" />
-  <meta property="og:image:secure_url" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
+  <meta property="og:image:secure_url" content="https://marketinghuts-del.github.io/bomardekdiagnosticandpharmaceutical/preview.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Zone 3 Diagnostic & Laboratory Services Limited — Tap or scan QR code to book diagnostic tests instantly" />
-
-  <!-- Fallback -->
-  <link rel="image_src" href="https://marketinghuts-del.github.io/bomardekdiagnosticandpharmaceutical/preview.jpg" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -46,10 +32,6 @@
 
   <!-- SEO / Theme -->
   <meta name="theme-color" content="#0b6f9a" />
-
-  <!-- Facebook (optional, do NOT use fake app IDs) -->
-  <!-- <meta property="fb:app_id" content="YOUR_REAL_FACEBOOK_APP_ID" /> -->
-  <!-- <meta property="fb:admins" content="YOUR_FACEBOOK_NUMERIC_ID" /> -->
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -62,6 +44,68 @@
     "description": "One-tap test booking for patients, doctors, and hospitals. Fast, reliable diagnostic booking.",
     "sameAs": []
   }
+  </script>
+
+  <!-- GA4 Tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQ97LGC85R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PQ97LGC85R');
+
+    // === UTM + QR + CTA Tracking ===
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const utm_source = urlParams.get('utm_source') || 'direct';
+      const utm_medium = urlParams.get('utm_medium') || 'none';
+      const utm_campaign = urlParams.get('utm_campaign') || 'none';
+      const isQR = utm_medium.toLowerCase() === 'qr';
+
+      sessionStorage.setItem('utm_source', utm_source);
+      sessionStorage.setItem('utm_medium', utm_medium);
+      sessionStorage.setItem('utm_campaign', utm_campaign);
+      sessionStorage.setItem('isQR', isQR ? '1' : '0');
+
+      // Initial page_view event with UTM & QR info
+      gtag('event', 'page_view', {
+        'utm_source': utm_source,
+        'utm_medium': utm_medium,
+        'utm_campaign': utm_campaign,
+        'qr_scan': isQR ? 1 : 0
+      });
+
+      // CTA button click
+      const ctaButton = document.getElementById('openFormBtn');
+      if(ctaButton){
+        ctaButton.addEventListener('click', function() {
+          gtag('event', 'cta_click', {
+            'event_category': 'CTA',
+            'event_label': 'Booking Form',
+            'utm_source': sessionStorage.getItem('utm_source'),
+            'utm_medium': sessionStorage.getItem('utm_medium'),
+            'utm_campaign': sessionStorage.getItem('utm_campaign'),
+            'qr_scan': sessionStorage.getItem('isQR')
+          });
+        });
+      }
+
+      // Hero image click tracking
+      const heroImage = document.getElementById('heroImage');
+      if(heroImage){
+        heroImage.addEventListener('click', function() {
+          gtag('event', 'hero_image_click', {
+            'event_category': 'Hero',
+            'event_label': 'Hero Image Tap',
+            'utm_source': sessionStorage.getItem('utm_source'),
+            'utm_medium': sessionStorage.getItem('utm_medium'),
+            'utm_campaign': sessionStorage.getItem('utm_campaign'),
+            'qr_scan': sessionStorage.getItem('isQR')
+          });
+        });
+      }
+
+    })();
   </script>
 
   <style>
@@ -87,98 +131,21 @@
       max-width: 920px;
       padding: 20px;
     }
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .brand {
-      font-weight: 700;
-      font-size: 1.35rem;
-      color: var(--accent);
-      letter-spacing: 0.2px;
-    }
-    .lead {
-      text-align: center;
-      color: var(--muted);
-      margin: 12px auto 28px;
-      max-width: 600px;
-      font-size: 0.95rem;
-    }
-    .card {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
-      border: 1px solid rgba(15,20,25,0.05);
-      background: #fff;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover { transform: translateY(-3px); box-shadow:0 10px 34px rgba(0,0,0,0.1);}
-    .hero {
-      display: block;
-      width: 100%;
-      height: auto;
-      cursor: pointer;
-    }
-    .content {
-      padding: 22px 18px 28px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: var(--accent);
-      font-weight: 700;
-    }
-    p.small {
-      color: var(--muted);
-      font-size: 0.93rem;
-      margin-bottom: 18px;
-    }
-    .cta {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      padding: 14px 22px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: background 0.3s ease;
-    }
+    header { text-align:center;margin-bottom:20px; }
+    .brand { font-weight:700;font-size:1.35rem;color:var(--accent);letter-spacing:0.2px; }
+    .lead { text-align:center;color:var(--muted);margin:12px auto 28px;max-width:600px;font-size:0.95rem; }
+    .card { border-radius:16px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,0.08);border:1px solid rgba(15,20,25,0.05);background:#fff;transition:transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform:translateY(-3px); box-shadow:0 10px 34px rgba(0,0,0,0.1); }
+    .hero { display:block;width:100%;height:auto;cursor:pointer; }
+    .content { padding:22px 18px 28px; text-align:center; }
+    h1 { font-size:1.2rem;margin-bottom:10px;color:var(--accent);font-weight:700; }
+    p.small { color:var(--muted);font-size:0.93rem;margin-bottom:18px; }
+    .cta { display:inline-block;background:var(--accent);color:#fff;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:600;font-size:0.95rem;transition:background 0.3s ease; }
     .cta:hover { background:#095c82; }
-    .note {
-      margin-top: 18px;
-      background: #f7fbfd;
-      border: 1px solid rgba(11,111,154,0.08);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      text-align: left;
-    }
-    .testimonial {
-      background:#f9fafc;
-      border-left:4px solid var(--accent);
-      padding:14px 18px;
-      margin-top:22px;
-      border-radius:6px;
-      font-size:0.9rem;
-      color:var(--muted);
-      text-align:left;
-    }
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 30px;
-    }
-    @media (max-width:600px){
-      .wrap{padding:16px}
-      .cta{width:100%;padding:14px 0}
-      .note{text-align:center}
-      .testimonial{text-align:center}
-      h1{font-size:1.05rem;}
-    }
+    .note { margin-top:18px;background:#f7fbfd;border:1px solid rgba(11,111,154,0.08);border-radius:10px;padding:12px 16px;color:var(--muted);font-size:0.9rem;text-align:left; }
+    .testimonial { background:#f9fafc;border-left:4px solid var(--accent);padding:14px 18px;margin-top:22px;border-radius:6px;font-size:0.9rem;color:var(--muted);text-align:left; }
+    footer { text-align:center;color:var(--muted);font-size:0.85rem;margin-top:30px; }
+    @media (max-width:600px){ .wrap{padding:16px} .cta{width:100%;padding:14px 0} .note{text-align:center} .testimonial{text-align:center} h1{font-size:1.05rem;} }
   </style>
 </head>
 
@@ -194,7 +161,6 @@
     </p>
 
     <article class="card" aria-labelledby="card-title">
-
       <img id="heroImage" class="hero"
            src="https://marketinghuts-del.github.io/bomardekdiagnosticandpharmaceutical/preview.jpg"
            alt="Tap or scan QR code to open booking form" />
@@ -236,6 +202,7 @@
   </main>
 
   <script>
+    // Hero image tap opens form
     (function () {
       const formUrl = "https://shorturl.at/YqJAp";
       document.getElementById('heroImage').addEventListener('click', () => {
@@ -246,5 +213,3 @@
   </script>
 </body>
 </html>
-
-
