@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited</title>
 
-  <!-- Primary description -->
   <meta name="description" content="One-tap test booking for patients, doctors, and hospitals. Tap the card or scan the QR code to open our secure diagnostic booking form. Fast, reliable, and stress-free." />
 
-  <!-- Canonical (use preview domain) -->
   <link rel="canonical" href="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/" />
 
-  <!-- Open Graph (WhatsApp preview) -->
-  <!-- You asked: use this for whatsapp preview card -->
   <meta property="og:site_name" content="Zone 3 Diagnostic & Laboratory Services Limited" />
   <meta property="og:title" content="Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited" />
   <meta property="og:description" content="Tap or scan the QR code to open our secure form. Book, refer, or submit samples easily — fast and reliable diagnostics for patients, doctors, and hospitals." />
@@ -23,15 +19,13 @@
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zone 3 Diagnostic & Laboratory Services Limited — Tap or scan QR code to book diagnostic tests instantly" />
+  <meta property="og:image:alt" content="Zone 3 Diagnostic & Laboratory Services — Tap or scan QR to book tests instantly" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited" />
   <meta name="twitter:description" content="Tap or scan the QR code to open our secure form. Book, refer, or submit samples easily — fast and reliable diagnostics for patients, doctors, and hospitals." />
   <meta name="twitter:image" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
 
-  <!-- SEO / Theme -->
   <meta name="theme-color" content="#0b6f9a" />
 
   <!-- JSON-LD -->
@@ -42,12 +36,11 @@
     "name": "Zone 3 Diagnostic & Laboratory Services Limited",
     "url": "https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/",
     "logo": "https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg",
-    "description": "One-tap test booking for patients, doctors, and hospitals. Fast, reliable diagnostic booking.",
-    "sameAs": []
+    "description": "One-tap test booking for patients, doctors, and hospitals. Fast, reliable diagnostic booking."
   }
   </script>
 
-  <!-- GA4 Tracking (your Measurement ID) -->
+  <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQ97LGC85R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -55,208 +48,167 @@
     gtag('js', new Date());
     gtag('config', 'G-PQ97LGC85R');
 
-    /***** UTM + QR/STATUS + CTA Tracking (ready-to-use) *****/
+    /******* QR + WhatsApp + UTM Tracking *******/
     (function() {
       const urlParams = new URLSearchParams(window.location.search || '');
+      function raw(n){ return urlParams.get(n) || ''; }
+      const utm_source = decodeURIComponent(raw('utm_source').replace(/\+/g,'%20')) || 'direct';
+      const utm_medium = decodeURIComponent(raw('utm_medium').replace(/\+/g,'%20')) || 'none';
+      const utm_campaign = decodeURIComponent(raw('utm_campaign').replace(/\+/g,'%20')) || 'none';
 
-      // Read UTM values, normalize plus vs %2B
-      function raw(name){ return urlParams.get(name) || ''; }
-      const utm_source_raw = raw('utm_source');
-      const utm_medium_raw = raw('utm_medium');
-      const utm_campaign_raw = raw('utm_campaign');
-
-      // decode plus signs if present (some share tools use +)
-      const utm_source = decodeURIComponent(utm_source_raw.replace(/\+/g, '%20')) || 'direct';
-      const utm_medium = decodeURIComponent(utm_medium_raw.replace(/\+/g, '%20')) || 'none';
-      const utm_campaign = decodeURIComponent(utm_campaign_raw.replace(/\+/g, '%20')) || 'none';
-
-      // Detect QR / WhatsApp status patterns:
-      // Your QR link used: utm_source=whatsapp&utm_medium=status&utm_campaign=...
-      // Your preview link used: utm_source=whatsapp+preview&utm_medium=status...
       const isQR =
         utm_medium.toLowerCase().includes('qr') ||
         utm_medium.toLowerCase().includes('status') ||
         utm_source.toLowerCase().includes('qr') ||
-        utm_source.toLowerCase().includes('whatsapp') && utm_medium.toLowerCase().includes('status');
+        (utm_source.toLowerCase().includes('whatsapp') && utm_medium.toLowerCase().includes('status'));
 
-      // compact flags for event params
-      const qr_flag = isQR ? 1 : 0;
-      const preview_flag = (utm_source.toLowerCase().includes('preview') || utm_source.toLowerCase().includes('whatsapp preview')) ? 1 : 0;
+      const preview_flag =
+        utm_source.toLowerCase().includes('preview') ||
+        utm_source.toLowerCase().includes('whatsapp preview');
 
-      // Keep UTMs in session so clicks still include them if the user navigates
       try {
         sessionStorage.setItem('utm_source', utm_source);
         sessionStorage.setItem('utm_medium', utm_medium);
         sessionStorage.setItem('utm_campaign', utm_campaign);
-        sessionStorage.setItem('qr_flag', qr_flag ? '1' : '0');
+        sessionStorage.setItem('qr_flag', isQR ? '1' : '0');
         sessionStorage.setItem('preview_flag', preview_flag ? '1' : '0');
-      } catch(e){ /* sessionStorage might be blocked — that's ok */ }
+      } catch(e){}
 
-      // Send an enriched page_view event (this includes default page_view still recorded by GA,
-      // but having extra parameters helps you in Explorations and event-based filters)
       gtag('event', 'page_view', {
-        'utm_source': utm_source,
-        'utm_medium': utm_medium,
-        'utm_campaign': utm_campaign,
-        'qr_scan': qr_flag,
-        'whatsapp_preview': preview_flag,
-        'page_location': window.location.href,
-        'page_referrer': document.referrer || '(direct)'
+        utm_source,
+        utm_medium,
+        utm_campaign,
+        qr_scan: isQR ? 1 : 0,
+        whatsapp_preview: preview_flag ? 1 : 0,
+        page_location: window.location.href,
+        page_referrer: document.referrer || '(direct)'
       });
 
-      // Helper to read stored utm for click events (fallback to current)
-      function getStored(param, fallback){
-        try {
-          return sessionStorage.getItem(param) || fallback;
-        } catch(e){ return fallback; }
-      }
+      function stored(k,f){ try{return sessionStorage.getItem(k)||f;}catch(e){return f;} }
 
-      // CTA button click — goes to the actual Google Form (booking)
+      /******* CTA CLICK *******/
       const cta = document.getElementById('openFormBtn');
       if(cta){
-        cta.addEventListener('click', function(ev){
-          // Fire GA4 event for CTA click
+        cta.addEventListener('click', function(){
           gtag('event', 'cta_click', {
-            'event_category': 'engagement',
-            'event_label': 'booking_form_click',
-            'utm_source': getStored('utm_source', utm_source),
-            'utm_medium': getStored('utm_medium', utm_medium),
-            'utm_campaign': getStored('utm_campaign', utm_campaign),
-            'qr_scan': getStored('qr_flag', qr_flag ? '1' : '0'),
-            'whatsapp_preview': getStored('preview_flag', preview_flag ? '1' : '0'),
-            'page_location': window.location.href
+            event_category:'engagement',
+            event_label:'booking_form_click',
+            utm_source: stored('utm_source',utm_source),
+            utm_medium: stored('utm_medium',utm_medium),
+            utm_campaign: stored('utm_campaign',utm_campaign),
+            qr_scan: stored('qr_flag','0'),
+            whatsapp_preview: stored('preview_flag','0'),
+            page_location: window.location.href
           });
-          // navigation is target="_blank", so no need to prevent default
-        }, {passive: true});
+        },{passive:true});
       }
 
-      // Hero image click (some users tap the hero)
+      /******* HERO IMAGE CLICK → Opens Form *******/
       const hero = document.getElementById('heroImage');
       if(hero){
+        hero.style.cursor = "pointer";
         hero.addEventListener('click', function(){
           gtag('event', 'hero_image_click', {
-            'event_category': 'engagement',
-            'event_label': 'hero_image_tap',
-            'utm_source': getStored('utm_source', utm_source),
-            'utm_medium': getStored('utm_medium', utm_medium),
-            'utm_campaign': getStored('utm_campaign', utm_campaign),
-            'qr_scan': getStored('qr_flag', qr_flag ? '1' : '0'),
-            'whatsapp_preview': getStored('preview_flag', preview_flag ? '1' : '0'),
-            'page_location': window.location.href
+            event_category:'engagement',
+            event_label:'hero_image_tap',
+            utm_source: stored('utm_source',utm_source),
+            utm_medium: stored('utm_medium',utm_medium),
+            utm_campaign: stored('utm_campaign',utm_campaign),
+            qr_scan: stored('qr_flag','0'),
+            whatsapp_preview: stored('preview_flag','0'),
+            page_location: window.location.href
           });
-          // Open booking form in a new tab to ensure GA event sends
-          window.open(cta ? cta.href : '#', '_blank', 'noopener');
-        }, {passive: true});
+          window.open(
+            "https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=landing-image&utm_medium=hero&utm_campaign=diagnostic-lab",
+            "_blank",
+            "noopener"
+          );
+        },{passive:true});
       }
 
     })();
   </script>
 
   <style>
-    :root {
-      --accent:#0b6f9a;
-      --bg:#ffffff;
-      --text:#111;
-      --muted:#5f6368;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body {
-      font-family: "Inter", system-ui, Segoe UI, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
-    .wrap { width: 100%; max-width: 920px; padding: 20px; }
-    header { text-align:center;margin-bottom:20px; }
-    .brand { font-weight:700;font-size:1.35rem;color:var(--accent);letter-spacing:0.2px; }
-    .lead { text-align:center;color:var(--muted);margin:12px auto 28px;max-width:600px;font-size:0.95rem; }
-    .card { border-radius:16px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,0.08);border:1px solid rgba(15,20,25,0.05);background:#fff;transition:transform 0.3s ease, box-shadow 0.3s ease; }
-    .card:hover { transform:translateY(-3px); box-shadow:0 10px 34px rgba(0,0,0,0.1); }
-    .hero { display:block;width:100%;height:auto;cursor:pointer; }
-    .content { padding:22px 18px 28px; text-align:center; }
-    h1 { font-size:1.2rem;margin-bottom:10px;color:var(--accent);font-weight:700; }
-    p.small { color:var(--muted);font-size:0.93rem;margin-bottom:18px; }
-    .cta { display:inline-block;background:var(--accent);color:#fff;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:600;font-size:0.95rem;transition:background 0.3s ease; }
-    .cta:hover { background:#095c82; }
-    .note { margin-top:18px;background:#f7fbfd;border:1px solid rgba(11,111,154,0.08);border-radius:10px;padding:12px 16px;color:var(--muted);font-size:0.9rem;text-align:left; }
-    .testimonial { background:#f9fafc;border-left:4px solid var(--accent);padding:14px 18px;margin-top:22px;border-radius:6px;font-size:0.9rem;color:var(--muted);text-align:left; }
-    footer { text-align:center;color:var(--muted);font-size:0.85rem;margin-top:30px; }
-    @media (max-width:600px){ .wrap{padding:16px} .cta{width:100%;padding:14px 0} .note{text-align:center} .testimonial{text-align:center} h1{font-size:1.05rem;} }
+    :root { --accent:#0b6f9a; --bg:#fff; --text:#111; --muted:#5f6368; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:Inter,Arial,sans-serif;background:#fff;color:#111;min-height:100vh;display:flex;justify-content:center;padding:20px;}
+    .wrap{width:100%;max-width:920px;}
+    header{text-align:center;margin-bottom:20px}
+    .brand{font-size:1.35rem;font-weight:700;color:var(--accent)}
+    .lead{text-align:center;color:var(--muted);margin:12px auto 28px;max-width:600px}
+    .card{border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,0.05);box-shadow:0 8px 28px rgba(0,0,0,0.08);transition:.3s}
+    .card:hover{transform:translateY(-3px);box-shadow:0 10px 34px rgba(0,0,0,0.1);}
+    .hero{width:100%;display:block}
+    .content{text-align:center;padding:22px 18px 28px;}
+    h1{color:var(--accent);font-size:1.2rem;margin-bottom:10px;font-weight:700}
+    .small{color:var(--muted);margin-bottom:18px}
+    .cta{background:var(--accent);color:#fff;padding:14px 22px;border-radius:12px;display:inline-block;text-decoration:none;font-weight:600;margin-top:10px}
+    .cta:hover{background:#095c82}
+    .note{background:#f7fbfd;padding:12px;border-radius:10px;margin-top:20px;border:1px solid rgba(11,111,154,.08);color:var(--muted)}
+    .testimonial{background:#f9fafc;border-left:4px solid var(--accent);padding:14px;margin-top:20px;border-radius:6px;color:var(--muted)}
+    footer{text-align:center;color:var(--muted);margin-top:30px;font-size:.85rem}
   </style>
+
 </head>
 
 <body>
-  <main class="wrap">
-    <header>
-      <div class="brand">Zone 3 Diagnostic & Laboratory Services Limited</div>
-    </header>
+<div class="wrap">
+  <header>
+    <div class="brand">Zone 3 Diagnostic & Laboratory Services Limited</div>
+  </header>
 
-    <p class="lead">
-      📋 <strong>Get accurate test results — without waiting in long queues.</strong><br>
-      Patients, doctors, and partner hospitals can now book or submit samples in seconds — right from their phone.
-    </p>
+  <p class="lead">
+    📋 <strong>Get accurate test results — without waiting in long queues.</strong><br>
+    Patients, doctors, and partner hospitals can now book or submit samples in seconds — right from their phone.
+  </p>
 
-    <article class="card" aria-labelledby="card-title">
-      <img id="heroImage" class="hero"
-           src="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg"
-           alt="Tap or scan QR code to open booking form" />
+  <article class="card">
+    <!-- HERO IMAGE (Clickable) -->
+    <img id="heroImage" class="hero"
+         src="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg"
+         alt="Tap or scan QR code to open booking form" />
 
-      <div class="content">
-        <h1 id="card-title">Your Lab. Your Schedule. One Tap Away.</h1>
-        <p class="small">
-          Skip the phone calls. Tap once or scan the QR code to access our secure booking form — the fastest way to schedule tests, refer patients, or submit samples.
-        </p>
+    <div class="content">
+      <h1>Your Lab. Your Schedule. One Tap Away.</h1>
+      <p class="small">
+        Skip the phone calls. Tap once or scan the QR code to access our secure booking form — the fastest way to schedule tests, refer patients, or submit samples.
+      </p>
 
-        <div class="testimonial">
-          <em>"I booked a patient’s test in less than a minute."</em><br>
-          — Dr. Ishola, Partner Clinic
-        </div>
-        <div class="testimonial">
-          <em>"No queues. I booked, arrived, and got my results quickly."</em><br>
-          — Mrs. Gbadamosi, Patient
-        </div>
-
-        <!-- CTA goes directly to the Google Form (the QR/form URL you provided) -->
-        <a id="openFormBtn" class="cta"
-           href="https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=whatsapp&utm_medium=status&utm_campaign=diagnostic%2Blab"
-           target="_blank" rel="noopener noreferrer">
-           Tap Here or Scan the QR Code to Book Now
-        </a>
-
-        <div class="note">
-          <strong>Who uses this form?</strong><br>
-          • Patients — Book lab tests.<br>
-          • Doctors — Refer instantly.<br>
-          • Partner Hospitals — Submit samples fast.<br>
-          Every form goes straight to our diagnostic team.
-        </div>
+      <div class="testimonial">
+        <em>"I booked a patient’s test in less than a minute."</em><br>
+        — Dr. Ishola, Partner Clinic
       </div>
-    </article>
 
-    <footer>
-      © <span id="year"></span> Zone 3 Diagnostic & Laboratory Services Limited. Powered by Fantastic Skills.
-    </footer>
-  </main>
+      <div class="testimonial">
+        <em>"No queues. I booked, arrived, and got my results quickly."</em><br>
+        — Mrs. Gbadamosi, Patient
+      </div>
 
-  <script>
-    // small helper to open preview link if someone wants to share and see preview
-    (function () {
-      document.getElementById('year').textContent = new Date().getFullYear();
+      <a id="openFormBtn" class="cta"
+         href="https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=whatsapp&utm_medium=status&utm_campaign=diagnostic%2Blab"
+         target="_blank" rel="noopener">
+         Tap Here or Scan the QR Code to Book Now
+      </a>
 
-      // If user clicks the brand, open the WhatsApp-preview URL (useful for testing preview)
-      const brand = document.querySelector('.brand');
-      if(brand){
-        brand.style.cursor = 'pointer';
-        brand.title = 'Open WhatsApp preview (for testing)';
-        brand.addEventListener('click', function(){
-          window.open('https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/?utm_source=whatsapp%2Bpreview&utm_medium=status&utm_campaign=diagnostic%2Blab', '_blank', 'noopener');
-        }, {passive:true});
-      }
-    })();
-  </script>
+      <div class="note">
+        <strong>Who uses this form?</strong><br>
+        • Patients — Book lab tests.<br>
+        • Doctors — Refer instantly.<br>
+        • Partner Hospitals — Submit samples fast.<br>
+        Every form goes straight to our diagnostic team.
+      </div>
+    </div>
+  </article>
+
+  <footer>
+    © <span id="year"></span> Zone 3 Diagnostic & Laboratory Services Limited. Powered by Fantastic Skills.
+  </footer>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
