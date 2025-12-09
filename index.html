@@ -8,15 +8,16 @@
   <!-- Primary description -->
   <meta name="description" content="One-tap test booking for patients, doctors, and hospitals. Tap the card or scan the QR code to open our secure diagnostic booking form. Fast, reliable, and stress-free." />
 
-  <!-- Canonical -->
+  <!-- Canonical (use preview domain) -->
   <link rel="canonical" href="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/" />
 
-  <!-- Open Graph -->
+  <!-- Open Graph (WhatsApp preview) -->
+  <!-- You asked: use this for whatsapp preview card -->
   <meta property="og:site_name" content="Zone 3 Diagnostic & Laboratory Services Limited" />
   <meta property="og:title" content="Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited" />
   <meta property="og:description" content="Tap or scan the QR code to open our secure form. Book, refer, or submit samples easily — fast and reliable diagnostics for patients, doctors, and hospitals." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/" />
+  <meta property="og:url" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/?utm_source=whatsapp%2Bpreview&utm_medium=status&utm_campaign=diagnostic%2Blab" />
   <meta property="og:image" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
   <meta property="og:image:secure_url" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
@@ -46,7 +47,7 @@
   }
   </script>
 
-  <!-- GA4 Tracking -->
+  <!-- GA4 Tracking (your Measurement ID) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQ97LGC85R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -54,55 +55,98 @@
     gtag('js', new Date());
     gtag('config', 'G-PQ97LGC85R');
 
-    // === UTM + QR + CTA Tracking ===
+    /***** UTM + QR/STATUS + CTA Tracking (ready-to-use) *****/
     (function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const utm_source = urlParams.get('utm_source') || 'direct';
-      const utm_medium = urlParams.get('utm_medium') || 'none';
-      const utm_campaign = urlParams.get('utm_campaign') || 'none';
-      const isQR = utm_medium.toLowerCase() === 'qr';
+      const urlParams = new URLSearchParams(window.location.search || '');
 
-      sessionStorage.setItem('utm_source', utm_source);
-      sessionStorage.setItem('utm_medium', utm_medium);
-      sessionStorage.setItem('utm_campaign', utm_campaign);
-      sessionStorage.setItem('isQR', isQR ? '1' : '0');
+      // Read UTM values, normalize plus vs %2B
+      function raw(name){ return urlParams.get(name) || ''; }
+      const utm_source_raw = raw('utm_source');
+      const utm_medium_raw = raw('utm_medium');
+      const utm_campaign_raw = raw('utm_campaign');
 
-      // Initial page_view event with UTM & QR info
+      // decode plus signs if present (some share tools use +)
+      const utm_source = decodeURIComponent(utm_source_raw.replace(/\+/g, '%20')) || 'direct';
+      const utm_medium = decodeURIComponent(utm_medium_raw.replace(/\+/g, '%20')) || 'none';
+      const utm_campaign = decodeURIComponent(utm_campaign_raw.replace(/\+/g, '%20')) || 'none';
+
+      // Detect QR / WhatsApp status patterns:
+      // Your QR link used: utm_source=whatsapp&utm_medium=status&utm_campaign=...
+      // Your preview link used: utm_source=whatsapp+preview&utm_medium=status...
+      const isQR =
+        utm_medium.toLowerCase().includes('qr') ||
+        utm_medium.toLowerCase().includes('status') ||
+        utm_source.toLowerCase().includes('qr') ||
+        utm_source.toLowerCase().includes('whatsapp') && utm_medium.toLowerCase().includes('status');
+
+      // compact flags for event params
+      const qr_flag = isQR ? 1 : 0;
+      const preview_flag = (utm_source.toLowerCase().includes('preview') || utm_source.toLowerCase().includes('whatsapp preview')) ? 1 : 0;
+
+      // Keep UTMs in session so clicks still include them if the user navigates
+      try {
+        sessionStorage.setItem('utm_source', utm_source);
+        sessionStorage.setItem('utm_medium', utm_medium);
+        sessionStorage.setItem('utm_campaign', utm_campaign);
+        sessionStorage.setItem('qr_flag', qr_flag ? '1' : '0');
+        sessionStorage.setItem('preview_flag', preview_flag ? '1' : '0');
+      } catch(e){ /* sessionStorage might be blocked — that's ok */ }
+
+      // Send an enriched page_view event (this includes default page_view still recorded by GA,
+      // but having extra parameters helps you in Explorations and event-based filters)
       gtag('event', 'page_view', {
         'utm_source': utm_source,
         'utm_medium': utm_medium,
         'utm_campaign': utm_campaign,
-        'qr_scan': isQR ? 1 : 0
+        'qr_scan': qr_flag,
+        'whatsapp_preview': preview_flag,
+        'page_location': window.location.href,
+        'page_referrer': document.referrer || '(direct)'
       });
 
-      // CTA button click
-      const ctaButton = document.getElementById('openFormBtn');
-      if(ctaButton){
-        ctaButton.addEventListener('click', function() {
-          gtag('event', 'cta_click', {
-            'event_category': 'CTA',
-            'event_label': 'Booking Form',
-            'utm_source': sessionStorage.getItem('utm_source'),
-            'utm_medium': sessionStorage.getItem('utm_medium'),
-            'utm_campaign': sessionStorage.getItem('utm_campaign'),
-            'qr_scan': sessionStorage.getItem('isQR')
-          });
-        });
+      // Helper to read stored utm for click events (fallback to current)
+      function getStored(param, fallback){
+        try {
+          return sessionStorage.getItem(param) || fallback;
+        } catch(e){ return fallback; }
       }
 
-      // Hero image click tracking
-      const heroImage = document.getElementById('heroImage');
-      if(heroImage){
-        heroImage.addEventListener('click', function() {
-          gtag('event', 'hero_image_click', {
-            'event_category': 'Hero',
-            'event_label': 'Hero Image Tap',
-            'utm_source': sessionStorage.getItem('utm_source'),
-            'utm_medium': sessionStorage.getItem('utm_medium'),
-            'utm_campaign': sessionStorage.getItem('utm_campaign'),
-            'qr_scan': sessionStorage.getItem('isQR')
+      // CTA button click — goes to the actual Google Form (booking)
+      const cta = document.getElementById('openFormBtn');
+      if(cta){
+        cta.addEventListener('click', function(ev){
+          // Fire GA4 event for CTA click
+          gtag('event', 'cta_click', {
+            'event_category': 'engagement',
+            'event_label': 'booking_form_click',
+            'utm_source': getStored('utm_source', utm_source),
+            'utm_medium': getStored('utm_medium', utm_medium),
+            'utm_campaign': getStored('utm_campaign', utm_campaign),
+            'qr_scan': getStored('qr_flag', qr_flag ? '1' : '0'),
+            'whatsapp_preview': getStored('preview_flag', preview_flag ? '1' : '0'),
+            'page_location': window.location.href
           });
-        });
+          // navigation is target="_blank", so no need to prevent default
+        }, {passive: true});
+      }
+
+      // Hero image click (some users tap the hero)
+      const hero = document.getElementById('heroImage');
+      if(hero){
+        hero.addEventListener('click', function(){
+          gtag('event', 'hero_image_click', {
+            'event_category': 'engagement',
+            'event_label': 'hero_image_tap',
+            'utm_source': getStored('utm_source', utm_source),
+            'utm_medium': getStored('utm_medium', utm_medium),
+            'utm_campaign': getStored('utm_campaign', utm_campaign),
+            'qr_scan': getStored('qr_flag', qr_flag ? '1' : '0'),
+            'whatsapp_preview': getStored('preview_flag', preview_flag ? '1' : '0'),
+            'page_location': window.location.href
+          });
+          // Open booking form in a new tab to ensure GA event sends
+          window.open(cta ? cta.href : '#', '_blank', 'noopener');
+        }, {passive: true});
       }
 
     })();
@@ -126,11 +170,7 @@
       align-items: flex-start;
       min-height: 100vh;
     }
-    .wrap {
-      width: 100%;
-      max-width: 920px;
-      padding: 20px;
-    }
+    .wrap { width: 100%; max-width: 920px; padding: 20px; }
     header { text-align:center;margin-bottom:20px; }
     .brand { font-weight:700;font-size:1.35rem;color:var(--accent);letter-spacing:0.2px; }
     .lead { text-align:center;color:var(--muted);margin:12px auto 28px;max-width:600px;font-size:0.95rem; }
@@ -180,8 +220,9 @@
           — Mrs. Gbadamosi, Patient
         </div>
 
+        <!-- CTA goes directly to the Google Form (the QR/form URL you provided) -->
         <a id="openFormBtn" class="cta"
-           href="https://shorturl.at/YqJAp"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=whatsapp&utm_medium=status&utm_campaign=diagnostic%2Blab"
            target="_blank" rel="noopener noreferrer">
            Tap Here or Scan the QR Code to Book Now
         </a>
@@ -202,15 +243,20 @@
   </main>
 
   <script>
-    // Hero image tap opens form
+    // small helper to open preview link if someone wants to share and see preview
     (function () {
-      const formUrl = "https://shorturl.at/YqJAp";
-      document.getElementById('heroImage').addEventListener('click', () => {
-        window.open(formUrl, '_blank', 'noopener');
-      });
       document.getElementById('year').textContent = new Date().getFullYear();
+
+      // If user clicks the brand, open the WhatsApp-preview URL (useful for testing preview)
+      const brand = document.querySelector('.brand');
+      if(brand){
+        brand.style.cursor = 'pointer';
+        brand.title = 'Open WhatsApp preview (for testing)';
+        brand.addEventListener('click', function(){
+          window.open('https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/?utm_source=whatsapp%2Bpreview&utm_medium=status&utm_campaign=diagnostic%2Blab', '_blank', 'noopener');
+        }, {passive:true});
+      }
     })();
   </script>
 </body>
 </html>
-
