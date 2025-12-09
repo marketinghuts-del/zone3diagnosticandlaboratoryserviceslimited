@@ -3,32 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited</title>
+  <title>Book Diagnostic Tests | Zone 3 Diagnostic & Laboratory Services Limited</title>
 
-  <meta name="description" content="One-tap test booking for patients, doctors, and hospitals. Tap the card or scan the QR code to open our secure diagnostic booking form. Fast, reliable, and stress-free." />
+  <meta name="description"
+        content="Book diagnostic tests instantly. Patients, doctors, and hospitals can submit samples or schedule tests in seconds. Fast, reliable, and secure." />
 
   <link rel="canonical" href="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/" />
 
+  <!-- Open Graph -->
   <meta property="og:site_name" content="Zone 3 Diagnostic & Laboratory Services Limited" />
-  <meta property="og:title" content="Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited" />
-  <meta property="og:description" content="Tap or scan the QR code to open our secure form. Book, refer, or submit samples easily — fast and reliable diagnostics for patients, doctors, and hospitals." />
+  <meta property="og:title" content="Book Diagnostic Tests Instantly" />
+  <meta property="og:description"
+        content="Tap or scan the QR code to open our secure booking form. Fast, reliable diagnostics for patients, doctors, and hospitals." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/?utm_source=whatsapp%2Bpreview&utm_medium=status&utm_campaign=diagnostic%2Blab" />
-  <meta property="og:image" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
-  <meta property="og:image:secure_url" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
-  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:url"
+        content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/?utm_source=whatsapp_preview&utm_medium=status&utm_campaign=diagnostic_lab" />
+  <meta property="og:image"
+        content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zone 3 Diagnostic & Laboratory Services — Tap or scan QR to book tests instantly" />
+  <meta property="og:image:alt"
+        content="Scan the QR code to book diagnostic tests instantly" />
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Book Diagnostic Tests Instantly | Zone 3 Diagnostic & Laboratory Services Limited" />
-  <meta name="twitter:description" content="Tap or scan the QR code to open our secure form. Book, refer, or submit samples easily — fast and reliable diagnostics for patients, doctors, and hospitals." />
-  <meta name="twitter:image" content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
+  <meta name="twitter:title" content="Book Diagnostic Tests Instantly" />
+  <meta name="twitter:description"
+        content="Secure diagnostic test booking for patients, doctors, and hospitals." />
+  <meta name="twitter:image"
+        content="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg" />
 
   <meta name="theme-color" content="#0b6f9a" />
 
-  <!-- JSON-LD -->
+  <!-- JSON-LD Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,7 +43,7 @@
     "name": "Zone 3 Diagnostic & Laboratory Services Limited",
     "url": "https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/",
     "logo": "https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg",
-    "description": "One-tap test booking for patients, doctors, and hospitals. Fast, reliable diagnostic booking."
+    "description": "Fast and reliable diagnostic booking for patients, doctors, and hospitals."
   }
   </script>
 
@@ -44,112 +51,162 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQ97LGC85R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-PQ97LGC85R');
 
-    /******* QR + WhatsApp + UTM Tracking *******/
+    /*************** TRACKING SCRIPT *****************/
     (function() {
-      const urlParams = new URLSearchParams(window.location.search || '');
-      function raw(n){ return urlParams.get(n) || ''; }
-      const utm_source = decodeURIComponent(raw('utm_source').replace(/\+/g,'%20')) || 'direct';
-      const utm_medium = decodeURIComponent(raw('utm_medium').replace(/\+/g,'%20')) || 'none';
-      const utm_campaign = decodeURIComponent(raw('utm_campaign').replace(/\+/g,'%20')) || 'none';
+      const url = new URLSearchParams(location.search || '');
+      const decode = v => decodeURIComponent((v || '').replace(/\+/g,'%20'));
 
-      const isQR =
-        utm_medium.toLowerCase().includes('qr') ||
-        utm_medium.toLowerCase().includes('status') ||
-        utm_source.toLowerCase().includes('qr') ||
-        (utm_source.toLowerCase().includes('whatsapp') && utm_medium.toLowerCase().includes('status'));
+      const utm_source = decode(url.get('utm_source')) || 'direct';
+      const utm_medium = decode(url.get('utm_medium')) || 'none';
+      const utm_campaign = decode(url.get('utm_campaign')) || 'none';
 
-      const preview_flag =
-        utm_source.toLowerCase().includes('preview') ||
-        utm_source.toLowerCase().includes('whatsapp preview');
+      const qr_detect =
+        utm_medium.includes('qr') ||
+        utm_source.includes('qr') ||
+        utm_source.includes('whatsapp') && utm_medium.includes('status');
 
-      try {
-        sessionStorage.setItem('utm_source', utm_source);
-        sessionStorage.setItem('utm_medium', utm_medium);
-        sessionStorage.setItem('utm_campaign', utm_campaign);
-        sessionStorage.setItem('qr_flag', isQR ? '1' : '0');
-        sessionStorage.setItem('preview_flag', preview_flag ? '1' : '0');
-      } catch(e){}
+      const preview_detect =
+        utm_source.includes('preview') ||
+        utm_source.includes('whatsapp_preview');
 
-      gtag('event', 'page_view', {
+      sessionStorage.setItem('utm_source', utm_source);
+      sessionStorage.setItem('utm_medium', utm_medium);
+      sessionStorage.setItem('utm_campaign', utm_campaign);
+      sessionStorage.setItem('qr_flag', qr_detect ? '1' : '0');
+      sessionStorage.setItem('preview_flag', preview_detect ? '1':'0');
+
+      gtag('event','page_view',{
         utm_source,
         utm_medium,
         utm_campaign,
-        qr_scan: isQR ? 1 : 0,
-        whatsapp_preview: preview_flag ? 1 : 0,
-        page_location: window.location.href,
-        page_referrer: document.referrer || '(direct)'
+        qr_scan: qr_detect ? 1 : 0,
+        whatsapp_preview: preview_detect ? 1 : 0,
+        page_location: location.href,
+        page_referrer: document.referrer || 'none'
       });
 
-      function stored(k,f){ try{return sessionStorage.getItem(k)||f;}catch(e){return f;} }
+      const stored = key => sessionStorage.getItem(key);
 
-      /******* CTA CLICK *******/
+      /*************** CTA CLICK TRACKING *****************/
       const cta = document.getElementById('openFormBtn');
       if(cta){
-        cta.addEventListener('click', function(){
-          gtag('event', 'cta_click', {
+        cta.addEventListener('click', () => {
+          gtag('event','cta_click',{
             event_category:'engagement',
             event_label:'booking_form_click',
-            utm_source: stored('utm_source',utm_source),
-            utm_medium: stored('utm_medium',utm_medium),
-            utm_campaign: stored('utm_campaign',utm_campaign),
-            qr_scan: stored('qr_flag','0'),
-            whatsapp_preview: stored('preview_flag','0'),
-            page_location: window.location.href
+            utm_source: stored('utm_source'),
+            utm_medium: stored('utm_medium'),
+            utm_campaign: stored('utm_campaign'),
+            qr_scan: stored('qr_flag'),
+            whatsapp_preview: stored('preview_flag'),
+            page_location: location.href
           });
-        },{passive:true});
+        });
       }
 
-      /******* HERO IMAGE CLICK → Opens Form *******/
+      /*************** HERO IMAGE CLICK TRACKING ***************/
       const hero = document.getElementById('heroImage');
       if(hero){
-        hero.style.cursor = "pointer";
-        hero.addEventListener('click', function(){
-          gtag('event', 'hero_image_click', {
+        hero.style.cursor='pointer';
+        hero.addEventListener('click',()=>{
+          gtag('event','hero_image_click',{
             event_category:'engagement',
             event_label:'hero_image_tap',
-            utm_source: stored('utm_source',utm_source),
-            utm_medium: stored('utm_medium',utm_medium),
-            utm_campaign: stored('utm_campaign',utm_campaign),
-            qr_scan: stored('qr_flag','0'),
-            whatsapp_preview: stored('preview_flag','0'),
-            page_location: window.location.href
+            utm_source: stored('utm_source'),
+            utm_medium: stored('utm_medium'),
+            utm_campaign: stored('utm_campaign'),
+            qr_scan: stored('qr_flag'),
+            whatsapp_preview: stored('preview_flag'),
+            page_location: location.href
           });
+
           window.open(
-            "https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=landing-image&utm_medium=hero&utm_campaign=diagnostic-lab",
+            "https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=hero&utm_medium=image&utm_campaign=diagnostic_lab",
             "_blank",
             "noopener"
           );
-        },{passive:true});
+        });
       }
 
     })();
   </script>
 
+  <!-- Styles -->
   <style>
-    :root { --accent:#0b6f9a; --bg:#fff; --text:#111; --muted:#5f6368; }
+    :root { --accent:#0b6f9a; --muted:#5f6368; }
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:Inter,Arial,sans-serif;background:#fff;color:#111;min-height:100vh;display:flex;justify-content:center;padding:20px;}
-    .wrap{width:100%;max-width:920px;}
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:#fff;
+      color:#111;
+      padding:20px;
+      display:flex;
+      justify-content:center;
+      min-height:100vh;
+    }
+    .wrap{max-width:920px;width:100%;}
     header{text-align:center;margin-bottom:20px}
-    .brand{font-size:1.35rem;font-weight:700;color:var(--accent)}
-    .lead{text-align:center;color:var(--muted);margin:12px auto 28px;max-width:600px}
-    .card{border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,0.05);box-shadow:0 8px 28px rgba(0,0,0,0.08);transition:.3s}
-    .card:hover{transform:translateY(-3px);box-shadow:0 10px 34px rgba(0,0,0,0.1);}
-    .hero{width:100%;display:block}
-    .content{text-align:center;padding:22px 18px 28px;}
-    h1{color:var(--accent);font-size:1.2rem;margin-bottom:10px;font-weight:700}
-    .small{color:var(--muted);margin-bottom:18px}
-    .cta{background:var(--accent);color:#fff;padding:14px 22px;border-radius:12px;display:inline-block;text-decoration:none;font-weight:600;margin-top:10px}
-    .cta:hover{background:#095c82}
-    .note{background:#f7fbfd;padding:12px;border-radius:10px;margin-top:20px;border:1px solid rgba(11,111,154,.08);color:var(--muted)}
-    .testimonial{background:#f9fafc;border-left:4px solid var(--accent);padding:14px;margin-top:20px;border-radius:6px;color:var(--muted)}
-    footer{text-align:center;color:var(--muted);margin-top:30px;font-size:.85rem}
-  </style>
+    .brand{font-size:1.4rem;font-weight:700;color:var(--accent)}
+    .lead{text-align:center;color:var(--muted);margin:14px auto 28px;max-width:620px;font-size:1rem;}
 
+    .card{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,0.05);
+      box-shadow:0 8px 28px rgba(0,0,0,0.08);
+    }
+
+    .hero{display:block;width:100%;height:auto;}
+
+    .content{text-align:center;padding:24px 20px 32px;}
+    h1{color:var(--accent);font-size:1.25rem;margin-bottom:12px;font-weight:700}
+
+    .small{color:var(--muted);margin-bottom:18px;font-size:.95rem;}
+
+    .cta{
+      background:var(--accent);
+      color:#fff;
+      padding:14px 22px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+      display:inline-block;
+      margin-top:12px;
+    }
+
+    .cta:hover{background:#095c82}
+
+    .testimonial{
+      background:#f9fafc;
+      padding:14px;
+      border-left:4px solid var(--accent);
+      border-radius:6px;
+      color:var(--muted);
+      margin-top:18px;
+      font-size:.92rem;
+    }
+
+    .note{
+      background:#f7fbfd;
+      padding:14px;
+      border-radius:10px;
+      margin-top:22px;
+      font-size:.95rem;
+      border:1px solid rgba(11,111,154,.08);
+      color:var(--muted);
+    }
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      margin-top:34px;
+      font-size:.85rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -159,44 +216,43 @@
   </header>
 
   <p class="lead">
-    📋 <strong>Get accurate test results — without waiting in long queues.</strong><br>
-    Patients, doctors, and partner hospitals can now book or submit samples in seconds — right from their phone.
+    📋 <strong>Get accurate test results — without delays.</strong><br>
+    Patients, doctors, and partner hospitals can now book tests or submit samples instantly.
   </p>
 
   <article class="card">
-    <!-- HERO IMAGE (Clickable) -->
     <img id="heroImage" class="hero"
          src="https://marketinghuts-del.github.io/zone3diagnosticandlaboratoryserviceslimited/preview.jpg"
          alt="Tap or scan QR code to open booking form" />
 
     <div class="content">
-      <h1>Your Lab. Your Schedule. One Tap Away.</h1>
+      <h1>Book Tests in Seconds</h1>
+
       <p class="small">
-        Skip the phone calls. Tap once or scan the QR code to access our secure booking form — the fastest way to schedule tests, refer patients, or submit samples.
+        Tap once or scan the QR code to access our secure booking form.
       </p>
 
       <div class="testimonial">
-        <em>"I booked a patient’s test in less than a minute."</em><br>
+        <em>"I booked a patient’s test in under a minute."</em><br>
         — Dr. Ishola, Partner Clinic
       </div>
 
       <div class="testimonial">
-        <em>"No queues. I booked, arrived, and got my results quickly."</em><br>
+        <em>"No queues. Quick booking and fast results."</em><br>
         — Mrs. Gbadamosi, Patient
       </div>
 
       <a id="openFormBtn" class="cta"
-         href="https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=whatsapp&utm_medium=status&utm_campaign=diagnostic%2Blab"
+         href="https://docs.google.com/forms/d/e/1FAIpQLSffjYkNgFUExjppcx5Jmob5vHyn8gGwsYADYRtx6ZgS0w-m2Q/viewform?usp=header&utm_source=whatsapp&utm_medium=status&utm_campaign=diagnostic_lab"
          target="_blank" rel="noopener">
-         Tap Here or Scan the QR Code to Book Now
+        Tap Here or Scan the QR to Book Now
       </a>
 
       <div class="note">
-        <strong>Who uses this form?</strong><br>
-        • Patients — Book lab tests.<br>
-        • Doctors — Refer instantly.<br>
-        • Partner Hospitals — Submit samples fast.<br>
-        Every form goes straight to our diagnostic team.
+        <strong>Who uses this?</strong><br>
+        • Patients — Book tests<br>
+        • Doctors — Refer instantly<br>
+        • Hospitals — Submit samples quickly
       </div>
     </div>
   </article>
@@ -212,5 +268,3 @@
 
 </body>
 </html>
-
-
